@@ -1,0 +1,134 @@
+html, body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.gradient {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  width: 100%;
+  padding: 20px;
+  background: linear-gradient(334deg, #4e4376, #2b5876, #4e4376, #2b5876);
+  background-size: 400% 400%;
+  animation: gradient-animation 10s ease infinite;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.glass {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  text-align: center;
+  font-size: 32px;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.form {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  border-radius: 30px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  max-width: 400px;
+  width: 100%;
+  backdrop-filter: blur(10px);
+}
+
+label {
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: left;
+  width: 100%;
+}
+
+input {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0)
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  padding: 10px;
+  margin-bottom: 20px;
+  color: white;
+  width: 100%;
+}
+
+input::placeholder {
+  color: white;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: transform 0.1s ease;
+  width: 100%;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+button::after {
+  content: "🚀";
+  margin-left: 10px;
+}
+
+p {
+  color: white;
+  text-align: center;
+  margin-top: 20px;
+}
+
+p a {
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  text-decoration: none;
+}
+
+p a:hover {
+  text-decoration: underline;
+}
