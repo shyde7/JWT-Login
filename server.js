@@ -39,6 +39,18 @@ app.post('/post', async (req, res) => {
   res.send("Form Submitted");
 });
 
+app.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email, password });
+    if (user) {
+        res.sendFile(path.join(__dirname, 'loginSuccess.html'));
+        console.log("User that signed in: ", user);
+    } else {
+        res.send('Login Failed');
+    }
+}
+);
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
