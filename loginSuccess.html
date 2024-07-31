@@ -3,9 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login Successful</title>
+    <link rel="stylesheet" href="stylesLogin.css">
 </head>
 <body>
-    <h1> LOGIN SUCESSFUL CONGRATULATIONS</h1>
+    <!-- Display user data -->
+    <h1>Login Successful!</h1>
+    <h2>User Data</h2>
+    <div class="userData">
+        <p id="user-email">Email: </p>
+        <p id="user-id">ID: </p>
+        <p id="timestamp">Timestamp: </p>
+    </div>
+
+    <a href="index.html">Logout</a>
+
+    <script>
+        // Grab user data from local storage
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        console.log("HERE IS ALL THE USERDATA:", userData); // Debug log
+
+        if (userData) {
+            // Display user data
+            document.getElementById('user-email').innerText = `Email: ${userData.email}`;
+            document.getElementById('user-id').innerText = `ID: ${userData.id}`;
+            document.getElementById('timestamp').innerText = `Timestamp: ${userData.timestamp}`;
+        } else {
+            console.error("No user data found in local storage.");
+            document.getElementById('user-email').innerText = "Email: Not found";
+            document.getElementById('user-id').innerText = "ID: Not found";
+            document.getElementById('timestamp').innerText = "Timestamp: Not found";
+        }
+    </script>
 </body>
 </html>

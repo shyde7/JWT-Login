@@ -116,6 +116,8 @@ button::after {
   margin-left: 10px;
 }
 
+/* Change elements of p for loginSuccess */
+
 p {
   color: white;
   text-align: center;

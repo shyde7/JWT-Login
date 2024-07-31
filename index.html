@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="gradient">
-        <h1 id="form-title">Sign Up For Super Cool Legit Service 😊 </h1>
+        <h1 id="form-title">Sign Up For Super Cool Legit Service 😊</h1>
         <div class="glass">
             <!-- Signup Form -->
             <div id="signup-form" class="form">
@@ -19,6 +19,9 @@
                     <label for="signup-password">Password</label>
                     <input type="password" id="signup-password" name="password" placeholder="Please Enter Password" required>
 
+                    <label for="signup-password-confirm">Confirm Password</label>
+                    <input type="password" id="signup-password-confirm" name="password-confirm" placeholder="Please Confirm Password" required>
+
                     <button type="submit">Sign Up</button>
                 </form>
                 <p>Already have an account? <a href="#" onclick="showLoginForm()">Log In</a></p>
@@ -26,7 +29,7 @@
 
             <!-- Login Form -->
             <div id="login-form" class="form" style="display:none;">
-                <form action="/login" method="post">
+                <form id="loginForm">
                     <label for="login-email">Email</label>
                     <input type="email" id="login-email" name="email" placeholder="Please Enter Email" required>
 
@@ -51,6 +54,37 @@
             document.getElementById('login-form').style.display = 'none';
             document.getElementById('form-title').innerText = 'Sign Up For Super Cool Legit Service 😊';
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('loginForm').addEventListener('submit', async function(event){
+                event.preventDefault();
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+
+                try {
+                    const response = await fetch('/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ email, password })
+                    });
+
+                    if(response.ok){
+                        const userData = await response.json();
+                        console.log("Received userData:", userData); // Debug log
+                        localStorage.setItem('userData', JSON.stringify(userData));
+                        window.location.href = 'loginSuccess.html';
+                    } else {
+                        const errorData = await response.json();
+                        alert('Login failed: ' + errorData.message);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again.');
+                }
+            });
+        });
     </script>
 </body>
 </html>
