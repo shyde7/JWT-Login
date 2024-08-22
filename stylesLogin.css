@@ -73,3 +73,25 @@ a:hover {
     background-color: #ffffff;
     color: #000000;
 }
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.1s ease;
+    max-width: fit-content;
+  }
+  
+  button:hover {
+    transform: scale(1.1);
+  }
+  
+  button::after {
+    content: "🚀";
+    margin-left: 10px;
+  }

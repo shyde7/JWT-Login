@@ -1,5 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+
 const path = require("path");
 const bcrypt = require("bcryptjs");
 const port = 3019;
@@ -31,6 +33,20 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
+app.get("/verify/:token", (req, res) => {
+  const {token} = req.params;
+
+  jwt.verify(token, 'secretKey', (err, decoded) => {
+    if (err) {
+      res.send("Email verification failed, possibly the link is invalid or expired");
+    }
+    else {
+      res.send("Email verified successfully");
+    }
+  });
+});
+
+
 app.post("/post", async (req, res) => {
   const { email, password } = req.body;
 
@@ -48,6 +64,8 @@ app.post("/post", async (req, res) => {
       // Store hash in database
       console.log("Here is the hash:" + hash);
 
+
+
       const user = new User({
         email,
         password: hash, // Storing the hash in the database
@@ -58,7 +76,7 @@ app.post("/post", async (req, res) => {
         .then(() => {
           console.log("User saved successfully");
           console.log("User: ", user);
-          res.send("Form successfully submitted");
+          res.sendFile(path.join(__dirname, "registerSuccess.html"));
         })
         .catch((err) => {
           console.error("ERROR: ", err);
