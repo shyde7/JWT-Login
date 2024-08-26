@@ -1,7 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-
+const nodemailer = require("nodemailer");
+const env= require("dotenv");
+env.config();
 const path = require("path");
 const bcrypt = require("bcryptjs");
 const port = 3019;
@@ -29,6 +31,20 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", userSchema);
 
+// Transporter setup for nodemailer to send emails to users when they register
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'jwttestingemail@gmail.com',
+    pass: 'fmgo ohoe imnp psrk',
+  }
+});
+
+// Serve static files from the 'styles' directory
+app.use(express.static(path.join(__dirname, 'styles')));
+
+// Serve static files from the root directory
+app.use(express.static(__dirname));
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
@@ -41,7 +57,7 @@ app.get("/verify/:token", (req, res) => {
       res.send("Email verification failed, possibly the link is invalid or expired");
     }
     else {
-      res.send("Email verified successfully");
+      res.sendFile(path.join(__dirname, "emailVerification.html"));
     }
   });
 });
@@ -76,13 +92,49 @@ app.post("/post", async (req, res) => {
         .then(() => {
           console.log("User saved successfully");
           console.log("User: ", user);
+
+
+          //generating JWT token for email verification
+          const token = jwt.sign({email:user.email}, 'secretKey', {expiresIn: '10m'});
+
+          // creating config for email with nodemailer
+          const mailConfig = {
+            from: `${env.email}`,
+            to: user.email,
+        
+            subject: 'Email Authentication',
+        
+            text: `Hi there! Thank you for signing up for this super legit service!
+            Please click the link here to verify your email: http://localhost:3019/verify/${token}`
+        };
+
+        // sending email to the user
+        transporter.sendMail(mailConfig, (error, info) => {
+          if(error){
+            console.error("Error sending email: ", error);
+            return res.status(500).send("ERROR SENDING EMAIL");
+          }
+          console.log('Email sent: ' + info.response);
           res.sendFile(path.join(__dirname, "registerSuccess.html"));
-        })
+        });
+      })
         .catch((err) => {
           console.error("ERROR: ", err);
           res.status(500).send("ERROR SAVING USER");
         });
     });
+  });
+});
+
+app.get("/verify/:token", (req, res) => {
+  const { token } = req.params;
+
+  jwt.verify(token, "secretKey", (err, decoded) => {
+    if (err) {
+      res.send("Email verification failed, possibly the link is invalid or expired");
+    } else {
+      res.sendFile(path.join(__dirname, "emailVerification.html"));
+    }
   });
 });
 

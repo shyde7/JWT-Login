@@ -16,13 +16,18 @@ const token = jwt.sign({
 }, 'secretKey', { expiresIn: '10m' }  
 ); 
 
+const userEmail = req.body.email;
+console.log(userEmail);
+
 const mailConfig = {
     from: 'jwttestingemail@gmail.com',
+    //send email to the user email that is given during signup
+    // to: userEmail,
     to: 'sean.hyde04@gmail.com',
 
     subject: 'Email Authentication',
 
-    text: `Hi there! THank you for signing up for this super legit service!
+    text: `Hi there! Thank you for signing up for this super legit service!
     Please click the link here to verify your email: http://localhost:3019/verify/${token}`
 };
 
