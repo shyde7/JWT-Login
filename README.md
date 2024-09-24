@@ -12,16 +12,11 @@ This project is a simple implementation of user authentication using JWT (JSON W
 
 ## Usage
 
-1. Start the server using Nodemon:
-    ```bash
-    nodemon server.js
-    ```
+1. Use the signup form to create a new user and the login form to authenticate.
+2. Check your email for a verification link.
+3. Click the link and your account will then be verified!
+4. Try signing in with the username and password you signed up with.
 
-2. Open your browser and navigate to `http://localhost:3019`.
-
-3. Use the signup form to create a new user and the login form to authenticate.
-
-   Alternatively try it out here: ## Link to Github Page
 
 ## Endpoints
 
@@ -40,12 +35,3 @@ This project is a simple implementation of user authentication using JWT (JSON W
 - JSON Web Tokens (JWT)
 - HTML, CSS, JavaScript
 
-## Notes
-
-- This project is a simple demonstration of JWT authentication and is not a complete application.
-- Proper error handling and validation should be added for production use.
-- Ensure your JWT secret is kept safe and not exposed in a public repository.
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
